@@ -10,7 +10,7 @@ better_team = st.selectbox(label='Select the better team:',
                             index=8)
 worse_team = st.selectbox(label='Select the worse team:', 
                           options=df.SchoolName.sort_values().unique(),
-                          index=96)
+                          index=97)
 
 if better_team and worse_team:
     # Filter rows where SchoolName is either better_team or worse_team
