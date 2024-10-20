@@ -2,8 +2,9 @@
 import pandas as pd
 year = 2000
 df = pd.DataFrame()
-for year in range(2000,2024,1):
-    yeardf = pd.read_html(f'{year}.xls',header=0)[0]
+for year in range(1980,2025,1):
+    print(year)
+    yeardf = pd.read_html(f'past_polls/{year}.xls',header=0)[0]
     yeardf['Year'] = year
     df=pd.concat([df,yeardf])
 
@@ -16,7 +17,7 @@ df['ReleaseDate'] = np.where(df['Date']=='Final',df['YearTxt']+'-12-31',
                              df['Date']))
 df.head()
 #%%
-df.drop(columns=['SchoolRecord','YearTxt']).to_csv('AP Poll 2000-23.csv')
+df.drop(columns=['YearTxt','This Week']).to_csv('AP AP Poll 1980-2024.csv')
 
 
 # %%

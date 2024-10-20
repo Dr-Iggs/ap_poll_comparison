@@ -1,9 +1,10 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
-df = pd.read_csv('AP Poll 2000-23.csv')
+df = pd.read_csv('AP Poll 1980-2024.csv')
 df['Year'] = df['Year'].astype(int)
+
+st.title('AP Poll Team Comparison')
 better_team = st.selectbox(label='Select the better team:', 
                            options=df.SchoolName.sort_values().unique(),
                             index=8)
