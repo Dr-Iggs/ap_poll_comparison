@@ -1,6 +1,7 @@
 #%%
 import pandas as pd
-year = 2000
+import numpy as np
+
 df = pd.DataFrame()
 for year in range(1980,2025,1):
     print(year)
@@ -8,16 +9,13 @@ for year in range(1980,2025,1):
     yeardf['Year'] = year
     df=pd.concat([df,yeardf])
 
-#%%
-import numpy as np
 df['SchoolName'] = df['School'].str.replace(r'\s*\(.*?\)', '', regex=True)
 df['YearTxt'] = df['Year'].astype(str)
 df['ReleaseDate'] = np.where(df['Date']=='Final',df['YearTxt']+'-12-31',
                              np.where(df['Date']=='Preseason',df['YearTxt']+'-08-01',
                              df['Date']))
 df.head()
-#%%
-df.drop(columns=['YearTxt','This Week']).to_csv('AP AP Poll 1980-2024.csv')
+df.drop(columns=['YearTxt','This Week']).to_csv('AP Poll 1980-2024.csv')
 
 
 # %%
