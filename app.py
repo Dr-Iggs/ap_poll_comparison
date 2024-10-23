@@ -170,20 +170,27 @@ def get_chart(df,better_team,worse_team):
     polls['Top Rank'] = polls[['rank_better', 'rank_worse']].min(axis=1).replace(np.nan,'Neither')
     polls['Both In'] = np.where(polls['rank_worse'].notna() & polls['rank_better'].notna(),True,False)
     fig = px.scatter(polls, x='Week', y='Year', 
-                 title="Who led in each AP Poll?<br><sup>Diamonds show weeks when both teams were in Top 25",
+                 #title="Who led in each AP Poll?<br><sup>Diamonds show weeks when both teams were in Top 25",
                  color="Winner",
                  color_discrete_sequence=polls['Color'].unique(),
-                 height=800,
+                 height=1000,
                  hover_data={'Top Rank': True},
                  symbol='Both In')
     
     # Loop through traces to remove the symbol legend
-    for trace in fig.data:
-        trace.showlegend = False  # Hide all traces from the legend
+    #for trace in fig.data:
+    #    trace.showlegend = False  # Hide all traces from the legend
 
     # Update layout to have a white background
     fig.update_layout(
-        title_font_size=30,
+        dragmode=False,
+        xaxis={'side': 'top', 'fixedrange': True},
+        yaxis=dict(fixedrange=True),
+        showlegend=True,
+        #title=dict(font=dict(size=30)),
+        xaxis_title={'font':dict(size=20),'text':'Week of the Season'},
+        yaxis_title={'font':dict(size=20)},
+        yaxis_tickvals=[2024,2020,2010,2000,1990,1980],
         plot_bgcolor='white',  # Plot background
         paper_bgcolor='white'  # Outer area background
     )
@@ -203,7 +210,8 @@ better_team = st.selectbox(label='Select the better team:',
 worse_team = st.selectbox(label='Select the worse team:', 
                           options=df.SchoolName.sort_values().unique(),
                           index=97)
-
+st.write('## Who led in each AP Poll?', )
+st.write('#### Diamonds show weeks when both teams were in Top 25')
 st.plotly_chart(get_chart(df,better_team,worse_team),use_container_width=True)
 
 if better_team and worse_team:
