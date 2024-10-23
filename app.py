@@ -26,10 +26,10 @@ teams = {
   "Georgia Tech" : ("#002C56", "#A5805A"),
   "Louisville" : ("#CA0019", "#000000", "#FEBB0C"),
   "Miami" : ("#E95700", "#FFFFFF", "#004E2E"),
-  "NC State" : ("#CD0000", "#000000", "#FFFFFF"),
+  "North Carolina State" : ("#CD0000", "#000000", "#FFFFFF"),
   "North Carolina" : ("#77A9CE", "#FFFFFF", "#112849"),
   "Notre Dame" : ("#011142", "#9D8839", "#01873B"),
-  "Pittsburgh" : ("#003295", "#FFBA15"),
+  "Pitt" : ("#003295", "#FFBA15"),
   "Syracuse" : ("#F14F23", "#FFFFFF", "#091F40"),
   "Virginia" : ("#232B42", "#FC5A1D"),
   "Virginia Tech" : ("#6E2A3D", "#D74B29", "#FFFFFF"),
@@ -41,7 +41,7 @@ teams = {
   "Kansas State" : ("#512888", "#FFFFFF", "#D1D1D1"),
   "Oklahoma" : ("#890002", "#FFFFFF"),
   "Oklahoma State" : ("#FF5C00", "#000000"),
-  "TCU" : ("#4F2683", "#E6E7E8", "#000000"),
+  "Texas Christian" : ("#4F2683", "#E6E7E8", "#000000"),
   "Texas" : ("#B44E2D", "#FFFFFF"),
   "Texas Tech" : ("#000000", "#CD0000", "#FFFFFF"),
   "West Virginia" : ("#012753", "#E8AD1C"),
@@ -105,7 +105,7 @@ teams = {
   "New Mexico" : ("#BC032C", "#FFFFFF", "#A1A2A4", "#000000"),
   "San Diego State" : ("#C41230", "#FFFFFF", "#000000"),
   "San Jose State" : ("#0035AA", "#FFFFFF", "#FFBA12"),
-  "UNLV" : ("#000000", "#E61A38", "#959CA1"),
+  "Nevada-Las Vegas" : ("#000000", "#E61A38", "#959CA1"),
   "Utah State" : ("#113257", "#FFFFFF", "#ACAAA5"),
   "Wyoming" : ("#533528", "#FEC524", "#FFFFFF"),
   # Pac-12
@@ -147,7 +147,8 @@ teams = {
   "Texas State" : ("#571C1F", "#AD9256"),
   "Troy" : ("#6D0017", "#FFFFFF", "#B4B5B9"),
   "UL Monroe" : ("#810028", "#FFFFFF", "#F6B312"),
-  "Neither" : ('#CCCCCC','#FFFFFF')
+  "Neither" : ('#CCCCCC','#FFFFFF'),
+  "James Madison": ('#000000','#000000')
 }
 
 
