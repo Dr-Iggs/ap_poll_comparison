@@ -1,7 +1,8 @@
 #%%
 import pandas as pd
 import numpy as np
-
+import plotly.express as px
+#%%
 df = pd.DataFrame()
 for year in range(1980,2025,1):
     print(year)
@@ -98,8 +99,8 @@ result
 
 #%%
 #Error detection: they never show up in a poll together
-better_team='Arizona'
-worse_team='Houston'
+better_team='BYU'
+worse_team='Utah'
 week_comparison = df[df['SchoolName'].isin([better_team, worse_team])]
 filtered_groups = week_comparison.groupby(['Year', 'ReleaseDate']).filter(
         lambda x: set([better_team, worse_team]).issubset(x['SchoolName'].unique())
@@ -126,7 +127,7 @@ has_better = df[df['SchoolName']==better_team].assign(rank_better=lambda x: x.Rk
 has_worse = df[df['SchoolName']==worse_team].assign(rank_worse=lambda x: x.Rk).filter(['ReleaseDate','SchoolName','rank_worse'])
 polls = df[['ReleaseDate', 'Date']].drop_duplicates()\
     .merge(has_better,how='left', on='ReleaseDate')\
-    .merge(has_worse,how='left', on='ReleaseDate',  )\
+    .merge(has_worse,how='left', on='ReleaseDate'  )\
     .sort_values('ReleaseDate')
 polls['Winner'] = np.where(polls['rank_worse'].notna() & polls['rank_better'].notna(),
                            np.where(polls['rank_worse']>polls['rank_better'],better_team,worse_team),
@@ -136,12 +137,55 @@ polls['Winner'] = np.where(polls['rank_worse'].notna() & polls['rank_better'].no
 polls['Year'] = polls['ReleaseDate'].str[:4].astype(int)
 polls['Week'] = polls.groupby('Year').cumcount() + 1
 polls.head()
+polls['Both In'] = np.where(polls['rank_worse'].notna() & polls['rank_better'].notna(),True,False)
+polls['Size'] = 15 
+polls['IsBigDot'] = 'Yes'
+both_poll_secondary_dot = polls[polls['Both In']==True]
+both_poll_secondary_dot['Winner'] = np.where(both_poll_secondary_dot['rank_worse']<both_poll_secondary_dot['rank_better'],better_team,worse_team)
+both_poll_secondary_dot['Size'] = 20
+both_poll_secondary_dot['IsBigDot'] = 'No'
+polls = pd.concat([polls,both_poll_secondary_dot],axis='rows')
 
 # Assuming polls DataFrame has 'Rank' and 'Year' columns
-fig = px.scatter(polls, x='Week', y='Year', title="Rank vs Year Scatter Plot",color="Winner",
-                 color_discrete_sequence=polls['Color'].unique())
+fig = px.scatter(polls, x='Week', y='Year', title="Rank vs Year Scatter Plot",
+                 color='Winner',size='Size')
+
+fig.update_traces(marker=dict(size=15), selector=dict(name=15))
+fig.update_traces(marker=dict(size=20), selector=dict(name=20))
+
 
 # Show the plot
+fig.show()
+
+#%%
+import plotly.express as px
+import pandas as pd
+
+# Example data for two sets of points
+df1 = pd.DataFrame({
+    'x': [1, 2, 3, 4],
+    'y': [10, 11, 12, 13],
+    'set': ['Set 1']*4
+})
+
+df2 = pd.DataFrame({
+    'x': [2, 3, 4, 5],
+    'y': [11, 12, 13, 14],
+    'set': ['Set 2']*4
+})
+
+# Combine the dataframes
+df = pd.concat([df1, df2])
+
+# Create scatter plot
+fig = px.scatter(df, x='x', y='y', color='set', 
+                 color_discrete_map={'Set 1': 'blue', 'Set 2': 'red'})
+
+# Update traces to make sure Set 2 is on top
+fig.update_traces(marker=dict(size=4), selector=dict(name='Set 2'))
+fig.update_traces(marker=dict(size=10), selector=dict(name='Set 1'))
+
+# Show plot
 fig.show()
 
 #%%
