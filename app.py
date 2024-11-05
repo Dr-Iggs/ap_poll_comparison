@@ -169,14 +169,15 @@ def get_chart(df,better_team,worse_team):
     polls['Week'] = polls.groupby('Year').cumcount() + 1
     polls['Color'] = polls['Winner'].map(lambda winner: teams[winner][0])
     polls['Top Rank'] = polls[['rank_better', 'rank_worse']].min(axis=1).replace(np.nan,'Neither')
-    polls['Both In'] = np.where(polls['rank_worse'].notna() & polls['rank_better'].notna(),True,False)
+    polls['Both In'] = np.where(polls['rank_worse'].notna() & polls['rank_better'].notna(),True,False)#True,False)
     fig = px.scatter(polls, x='Week', y='Year', 
                  #title="Who led in each AP Poll?<br><sup>Diamonds show weeks when both teams were in Top 25",
                  color="Winner",
                  color_discrete_sequence=polls['Color'].unique(),
                  height=1000,
                  hover_data={'Top Rank': True},
-                 symbol='Both In')
+                 symbol='Both In',
+                 symbol_sequence= ['circle','star-dot'])
     
     # Loop through traces to remove the symbol legend
     #for trace in fig.data:
@@ -188,6 +189,10 @@ def get_chart(df,better_team,worse_team):
         xaxis={'side': 'top', 'fixedrange': True},
         yaxis=dict(fixedrange=True),
         showlegend=True,
+        legend = dict(orientation='h',yanchor='bottom',
+                      y=1.02,
+                        xanchor="left",
+                        x=0),
         #title=dict(font=dict(size=30)),
         xaxis_title={'font':dict(size=20),'text':'Week of the Season'},
         yaxis_title={'font':dict(size=20)},
@@ -195,13 +200,17 @@ def get_chart(df,better_team,worse_team):
         plot_bgcolor='white',  # Plot background
         paper_bgcolor='white'  # Outer area background
     )
-    fig.update_traces(marker={'size': 15})
+    fig.update_traces(marker=dict(size=15
+                                  #,symbol=polls['Both In']
+                                  #,line=dict(width=[val for val in polls['Both In']], color='#222222')
+                                  )
+    )
     return fig  
 
 
 
 
-df = pd.read_csv('AP Poll 1980-2024.csv')
+df = pd.read_csv('AP Poll 1970-2024.csv')
 df['Year'] = df['Year'].astype(int)
 
 st.title('AP Poll Team Comparison')
@@ -212,9 +221,9 @@ worse_team = st.selectbox(label='Select the worse team:',
                           options=df.SchoolName.sort_values().unique(),
                           index=97)
 st.write('## Who led in each AP Poll?', )
-st.write('#### Diamonds show weeks when both teams were in Top 25')
+st.write('#### Stars show weeks when both teams were in Top 25')
 st.plotly_chart(get_chart(df,better_team,worse_team),use_container_width=True)
-
+st.write(f"#### More about {better_team} and {worse_team}'s AP Poll History")
 if better_team and worse_team:
     # Filter rows where SchoolName is either better_team or worse_team
     week_comparison = df[df['SchoolName'].isin([better_team, worse_team])]

@@ -4,7 +4,7 @@ import numpy as np
 import plotly.express as px
 #%%
 df = pd.DataFrame()
-for year in range(1980,2025,1):
+for year in range(1970,2025,1):
     print(year)
     yeardf = pd.read_html(f'past_polls/{year}.xls',header=0)[0]
     yeardf['Year'] = year
@@ -16,7 +16,7 @@ df['ReleaseDate'] = np.where(df['Date']=='Final',df['YearTxt']+'-12-31',
                              np.where(df['Date']=='Preseason',df['YearTxt']+'-08-01',
                              df['Date']))
 df.head()
-df.drop(columns=['YearTxt','This Week']).to_csv('AP Poll 1980-2024.csv')
+df.drop(columns=['YearTxt','This Week']).to_csv('AP Poll 1970-2024.csv')
 
 
 # %%
