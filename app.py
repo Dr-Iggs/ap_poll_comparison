@@ -196,7 +196,7 @@ def get_chart(df,better_team,worse_team):
         #title=dict(font=dict(size=30)),
         xaxis_title={'font':dict(size=20),'text':'Week of the Season'},
         yaxis_title={'font':dict(size=20)},
-        yaxis_tickvals=[2024,2020,2010,2000,1990,1980],
+        yaxis_tickvals=[2024,2020,2010,2000,1990,1980,1970],
         plot_bgcolor='white',  # Plot background
         paper_bgcolor='white'  # Outer area background
     )
