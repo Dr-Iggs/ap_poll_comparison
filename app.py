@@ -177,7 +177,7 @@ def get_chart(df,better_team,worse_team):
                  height=1000,
                  hover_data={'Top Rank': True},
                  symbol='Both In',
-                 symbol_sequence= ['circle','star-dot'])
+                 symbol_sequence= ['circle','star'])
     
     # Loop through traces to remove the symbol legend
     #for trace in fig.data:
@@ -190,7 +190,7 @@ def get_chart(df,better_team,worse_team):
         yaxis=dict(fixedrange=True),
         showlegend=True,
         legend = dict(orientation='h',yanchor='bottom',
-                      y=1.02,
+                      y=0.96,
                         xanchor="left",
                         x=0),
         #title=dict(font=dict(size=30)),
@@ -219,7 +219,7 @@ better_team = st.selectbox(label='Select the better team:',
                             index=8)
 worse_team = st.selectbox(label='Select the worse team:', 
                           options=df.SchoolName.sort_values().unique(),
-                          index=97)
+                          index=100)
 st.write('## Who led in each AP Poll?', )
 st.write('#### Stars show weeks when both teams were in Top 25')
 st.plotly_chart(get_chart(df,better_team,worse_team),use_container_width=True)
